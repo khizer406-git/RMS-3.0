@@ -10,11 +10,12 @@ interface Props<T extends FieldValues> {
   error?: FieldError;
   value: T[keyof T]
   onChange?: (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+  validator?: () => boolean|string;
 }
 
-const InputTextField = <T extends FieldValues>({ label, name, register, error, value,onChange }: Props<T>) => (
+const InputTextField = <T extends FieldValues>({ label, name, register, error, value,onChange,validator }: Props<T>) => (
   <TextField
-    {...register(name as Path<T>, { required: `${label} is required` })}
+    {...register(name as Path<T>, { required: `${label} is required`,validate: validator  })}
     label={label}
     variant="outlined"
     fullWidth
