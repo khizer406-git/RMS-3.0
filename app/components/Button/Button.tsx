@@ -1,8 +1,12 @@
 import Button from '@mui/material/Button';
 
-const CustomButton = () => {
+interface Prop {
+    onClick: () => void
+}
+
+const CustomButton = ({onClick}:Prop) => {
   return (
-    <Button variant="contained" color="primary" fullWidth>
+    <Button onClick={onClick} variant="outlined" color="primary" fullWidth sx={{padding:'10px',borderRadius:'8px'}} >
       Sign Up
     </Button>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
-import { FieldValues, UseFormRegister,Path,FieldError } from 'react-hook-form';
-import { SignUpFormValues } from '@/formValues';
+import { FieldValues, UseFormRegister,Path,FieldError,UseFormGetValues } from 'react-hook-form';
+import { FormValidatorProps } from '@/FormValidator/FormValidator';
 
 interface Props<T extends FieldValues> {
   label: string;
@@ -10,12 +10,15 @@ interface Props<T extends FieldValues> {
   error?: FieldError;
   value: T[keyof T]
   onChange?: (e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
-  validator?: () => boolean|string;
+  validator: (props: FormValidatorProps<T>) => boolean | string; 
+  type: string;
+  required ?: boolean;
 }
 
-const InputTextField = <T extends FieldValues>({ label, name, register, error, value,onChange,validator }: Props<T>) => (
+
+const InputTextField = <T extends FieldValues>({ label, name, register, error,type, value,onChange,validator,required=false }: Props<T>) => (
   <TextField
-    {...register(name as Path<T>, { required: `${label} is required`,validate: validator  })}
+    {...register(name as Path<T>, { ...(required && {required: `${label} is required`}), ...(validator && {validate: validator})  })}
     label={label}
     variant="outlined"
     fullWidth
@@ -24,6 +27,7 @@ const InputTextField = <T extends FieldValues>({ label, name, register, error, v
     helperText={error?.message }
     placeholder=''
     onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange && onChange(e)}
+    type={type}   
   />
 );
 
