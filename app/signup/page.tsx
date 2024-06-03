@@ -10,6 +10,7 @@ import CustomButton from "@/components/Button/Button";
 import PasswordInput from "@/components/Passwordinput/Passwordinput";
 import { Button } from "@mui/material";
 import { Validator } from "@/FormValidator/FormValidator";
+import {TextField} from "@mui/material";
 const SignUp = () => {
   const {
     register,
@@ -34,6 +35,8 @@ const SignUp = () => {
         <Typography className="text-center" variant="h4">Register</Typography>
         <Typography className="text-center" variant="h6">Please enter your credential below to continue</Typography>
         <Box className='grid grid-cols-1 md:grid-cols-2 gap-2'>
+
+        
           <InputTextField<FormValues>
             required={true}
             label="First Name"
@@ -43,6 +46,7 @@ const SignUp = () => {
             value={formValues.firstName}
             type="text"
             validator={Validator<FormValues>({ label: 'first name',getValues, getValueKey: 'firstName', type: 'text',required: true })}
+            setValue={setValue}
           />
           <InputTextField<FormValues> 
             required={true}
@@ -53,6 +57,7 @@ const SignUp = () => {
             value={formValues.lastName}
             type="text"
             validator={Validator<FormValues>({ label: 'last name',getValues, getValueKey: 'lastName', type: 'text' })}
+            setValue={setValue}
           />
           <InputTextField<FormValues> 
             required={true}
@@ -63,6 +68,7 @@ const SignUp = () => {
             value={formValues.phoneNumber}
             type="tel"
             validator={Validator<FormValues>({ label: 'phone number', getValues, getValueKey: 'phoneNumber', type: 'tel' })}
+            setValue={setValue}
           />
           <InputTextField<FormValues> 
             required={true}
@@ -73,6 +79,7 @@ const SignUp = () => {
             value={formValues.email}
             type="email"
             validator={Validator<FormValues>({ label: 'email', getValues, getValueKey: 'email', type: 'email' })}
+            setValue={setValue}
           />
           <PasswordInput<FormValues> 
           

@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextField } from '@mui/material';
-import { FieldValues, UseFormRegister,Path,FieldError,UseFormGetValues } from 'react-hook-form';
+import { FieldValues,UseFormSetValue, UseFormRegister,Path,FieldError,UseFormGetValues } from 'react-hook-form';
 import { FormValidatorProps } from '@/FormValidator/FormValidator';
 
 interface Props<T extends FieldValues> {
@@ -13,11 +13,14 @@ interface Props<T extends FieldValues> {
   validator: (props: FormValidatorProps<T>) => boolean | string; 
   type: string;
   required ?: boolean;
+  setValue : any;
 }
 
 
-const InputTextField = <T extends FieldValues>({ label, name, register, error,type, value,onChange,validator,required=false }: Props<T>) => (
-  <TextField
+const InputTextField = <T extends FieldValues>({ label, name, register, error,type, value,onChange,validator,required=false,setValue }: Props<T>) => {
+  
+  console.log(value,'awjdnsjd')
+  return (<TextField
     {...register(name as Path<T>, { ...(required && {required: `${label} is required`}), ...(validator && {validate: validator})  })}
     label={label}
     variant="outlined"
@@ -26,9 +29,10 @@ const InputTextField = <T extends FieldValues>({ label, name, register, error,ty
     error={!!error}
     helperText={error?.message }
     placeholder=''
-    onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => onChange && onChange(e)}
-    type={type}   
-  />
-);
+    onChange={(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {onChange && onChange(e);setValue(name,e.target.value)}}
+    type={type}
+    value={value}
+  />)
+}
 
 export default InputTextField;

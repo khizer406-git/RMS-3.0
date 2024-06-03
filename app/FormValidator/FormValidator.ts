@@ -44,11 +44,13 @@ export const Validator = <T extends FieldValues>({
   type,
   required = false,
 }: FormValidatorProps<T>): ((value: any) => string | boolean) => {
+
+  console.log(label,getValueKey,type,'awdj')
   return (value: any) => {
     if (required && !value.trim()) return `${label} is required`;
     if (type === "email") return EmailValidator(value);
     if (type === "password")
       return PasswordValidator(value, getValueKey, getValues);
-    return type === "password" ? true : "Passwords do not match";
+    return true;
   };
 };
