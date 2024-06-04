@@ -1,13 +1,14 @@
 import Button from '@mui/material/Button';
 
 interface Prop {
-    onClick: () => void
+  onClick: () => void;
+  text: string;
 }
 
-const CustomButton = ({onClick}:Prop) => {
+const CustomButton = ({ onClick, text }: Prop) => {
   return (
-    <Button onClick={onClick} variant="outlined" color="primary" fullWidth sx={{padding:'10px',borderRadius:'8px'}} >
-      Sign Up
+    <Button onClick={onClick} variant="outlined" color="primary" fullWidth sx={{ padding: '10px', borderRadius: '8px' }} >
+      {text}
     </Button>
   );
 };

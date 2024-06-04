@@ -2,7 +2,7 @@
     Table of Contents 
     SignUpFormValues
     SignIn FormValues
-*/} 
+*/}
 
 
 
@@ -15,3 +15,8 @@ export type SignUpFormValues = {
     confirmPassword: string;
 };
 
+export type SignInFormValues = {
+    email: string;
+    password: string;
+    rememberMe: boolean;
+};

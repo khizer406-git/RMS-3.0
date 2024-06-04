@@ -34,7 +34,7 @@ export interface FormValidatorProps<T extends FieldValues> {
   type: string;
   getValues: UseFormGetValues<T>;
   getValueKey: string;
-  required ?: boolean
+  required?: boolean
 }
 
 export const Validator = <T extends FieldValues>({
@@ -45,12 +45,14 @@ export const Validator = <T extends FieldValues>({
   required = false,
 }: FormValidatorProps<T>): ((value: any) => string | boolean) => {
 
-  console.log(label,getValueKey,type,'awdj')
+  // console.log(label,getValueKey,type,'awdj')
   return (value: any) => {
     if (required && !value.trim()) return `${label} is required`;
     if (type === "email") return EmailValidator(value);
     if (type === "password")
       return PasswordValidator(value, getValueKey, getValues);
+    if (type === "checkbox")
+      return value ? true : 'checkbox is required';
     return true;
   };
 };
