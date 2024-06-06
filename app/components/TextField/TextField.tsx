@@ -17,10 +17,11 @@ interface Props<T extends FieldValues> {
   required?: boolean;
   setValue: any;
   options?: { label: string, value: any }[]; // For radio buttons
+  disabled?: boolean
 }
 
 
-const InputTextField = <T extends FieldValues>({ options = [], label, name, register, error, type, value, onChange, validator, required = false, setValue }: Props<T>) => {
+const InputTextField = <T extends FieldValues>({ disabled = false, options = [], label, name, register, error, type, value, onChange, validator, required = false, setValue }: Props<T>) => {
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -61,20 +62,22 @@ const InputTextField = <T extends FieldValues>({ options = [], label, name, regi
           <Checkbox
             {...register(name as Path<T>, { ...(required && { required: `${label} is required` }), ...(validator && { validate: validator }) })}
             checked={!!value}
+            required={required}
             onChange={(e) => {
               setValue(name, e.target.checked);
               onChange && onChange(e);
             }}
-            required={required}
+            disabled={disabled}
           />
         }
-        label={<span style={{ whiteSpace: 'nowrap' }}>{label}</span>}
+        label={<span style={{ display: 'flex', gap: '2px', whiteSpace: 'nowrap' }}>{label}</span>}
       />
     );
   }
 
   return (<TextField
     {...register(name as Path<T>, { ...(required && { required: `${label} is required` }), ...(validator && { validate: validator }) })}
+    disabled={disabled}
     label={label}
     variant="outlined"
     fullWidth

@@ -20,3 +20,8 @@ export type SignInFormValues = {
     password: string;
     rememberMe: boolean;
 };
+
+export type ChangePasswordForm = {
+    password: string
+    confirmPassword: string
+}

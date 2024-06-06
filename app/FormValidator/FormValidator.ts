@@ -6,10 +6,12 @@ const ConfirmPasswordValidator = (
   getValues: any
 ) => {
   if (passwordType === "password") return true;
-  else
-    return password === getValues().passwordType
+  else {
+    console.log(password, getValues.password, 'awudh')
+    return password === getValues().password
       ? true
       : "Passwords do not match";
+  }
 };
 
 // Password Type means password or confirmPassword
@@ -19,6 +21,7 @@ const PasswordValidator = (
   getValues: any
 ) => {
   const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+
   return regex.test(password)
     ? ConfirmPasswordValidator(password, passwordType, getValues)
     : "Password must be at least 8 characters long and contain uppercase letters, lowercase letters, and numbers";
@@ -46,13 +49,17 @@ export const Validator = <T extends FieldValues>({
 }: FormValidatorProps<T>): ((value: any) => string | boolean) => {
 
   // console.log(label,getValueKey,type,'awdj')
+
   return (value: any) => {
+
     if (required && !value.trim()) return `${label} is required`;
     if (type === "email") return EmailValidator(value);
     if (type === "password")
       return PasswordValidator(value, getValueKey, getValues);
-    if (type === "checkbox")
-      return value ? true : 'checkbox is required';
+    if (type === "checkbox") {
+      console.log('Called')
+      return value !== null || undefined ? true : 'checkbox is required';
+    }
     return true;
   };
 };
