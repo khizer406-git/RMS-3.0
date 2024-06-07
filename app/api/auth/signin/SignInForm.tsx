@@ -8,8 +8,13 @@ import { Typography } from "@mui/material";
 import CustomButton from "@/components/Button/Button";
 import { Validator } from "@/FormValidator/FormValidator";
 import CheckBoxInput from "@/components/CheckBoxInput/CheckBoxInput";
+import { useRouter } from "next/navigation";
+interface Prop {
+    toggleForgetForm: () => void;
+}
+const SignInForm = ({ toggleForgetForm }: Prop) => {
 
-const SignInForm = () => {
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -59,7 +64,6 @@ const SignInForm = () => {
                 </Box>
                 <Box className="w-full flex items-center justify-between">
                     <InputTextField<FormValues>
-                        required={true}
                         label="Remember me"
                         name="rememberMe"
                         register={register}
@@ -69,11 +73,12 @@ const SignInForm = () => {
                         validator={Validator<FormValues>({ label: 'Remember Me', getValues, getValueKey: 'rememberMe', type: 'checkbox' })}
                         setValue={setValue}
                     />
-                    <Typography className="text-end w-full cursor-pointer text-blue-700" variant="caption">Forget your password ?</Typography>
+                    <Typography onClick={toggleForgetForm} className="text-end cursor-pointer text-blue-700" variant="caption">Forget your password ?</Typography>
                 </Box>
                 <Box className='my-4'>
                     <CustomButton text={'Sign In'} onClick={handleSubmit(onSubmit)} />
                 </Box>
+                <Typography onClick={() => { router.push('/api/auth/signup') }} className="text-end w-full cursor-pointer text-blue-700" variant="caption">If you don't have an account click here</Typography>
             </Container>
         </Box>
     );

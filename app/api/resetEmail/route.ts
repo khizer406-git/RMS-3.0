@@ -17,6 +17,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     const { email } = await req.json();
     const otp = generateOTP(6);
 
+    console.log(otp)
     return (
         NextResponse.json(
             { message: 'Otp has been send successfully to email' },

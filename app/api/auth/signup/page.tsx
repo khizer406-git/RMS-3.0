@@ -7,6 +7,7 @@ import { SignUpFormValues as FormValues } from "@/formValues";
 import { Typography } from "@mui/material";
 import CustomButton from "@/components/Button/Button";
 import { Validator } from "@/FormValidator/FormValidator";
+import { useRouter } from "next/navigation";
 const SignUp = () => {
   const {
     register,
@@ -20,7 +21,7 @@ const SignUp = () => {
 
   const formValues = watch();
 
-
+  const router = useRouter();
   const onSubmit = (data: FormValues) => {
     console.log(data)
   };
@@ -103,6 +104,7 @@ const SignUp = () => {
         <Box className='my-4'>
           <CustomButton text={'Sign Up'} onClick={handleSubmit(onSubmit)} />
         </Box>
+        <Typography onClick={() => { router.push('/api/auth/signin') }} className="text-end w-full cursor-pointer text-blue-700" variant="caption">Already have an account click here</Typography>
       </Container>
     </Box>
   );

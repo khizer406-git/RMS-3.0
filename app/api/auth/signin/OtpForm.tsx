@@ -17,7 +17,11 @@ type resetPasswordForm = {
     email: string
 }
 
-const OtpForm = () => {
+interface Prop {
+    toggleForgetForm: () => void
+    toggleResetForm: () => void
+}
+const OtpForm = ({ toggleForgetForm, toggleResetForm }: Prop) => {
 
     const [otpFormEnable, setOtpFormEnable] = useState(false);
 
@@ -27,6 +31,7 @@ const OtpForm = () => {
         setValue,
         getValues,
         watch,
+        reset,
         formState: { errors: errorReset },
     } = useForm<resetPasswordForm>();
 
@@ -36,8 +41,16 @@ const OtpForm = () => {
         setValue: setValue2,
         getValues: getValuesOtp,
         watch: watch2,
+        reset: reset2,
         formState: { errors: errorOtp },
     } = useForm<OTPFormValue>();
+
+    const resetFields = () => {
+        setOtpFormEnable(false);
+        reset();
+        reset2();
+        toggleForgetForm()
+    }
 
     const resetPasswordForm = watch();
     const OTPFormValue = watch2();
@@ -72,6 +85,7 @@ const OtpForm = () => {
             console.log(response)
             if (response.status === 201) {
                 console.log(response.data)
+                toggleResetForm();
             } else {
                 console.log(response.data)
             }
@@ -119,7 +133,7 @@ const OtpForm = () => {
                     </>}
                 </Box>
                 <Box className="w-full flex items-center justify-center">
-                    <Typography className="text-center w-full cursor-pointer text-blue-700" variant="caption">Back to Login</Typography>
+                    <Typography onClick={resetFields} className="text-center w-full cursor-pointer text-blue-700" variant="caption">Back to Login</Typography>
                 </Box>
             </Container>
         </Box>
