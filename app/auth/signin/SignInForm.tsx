@@ -9,6 +9,7 @@ import CustomButton from "@/components/Button/Button";
 import { Validator } from "@/FormValidator/FormValidator";
 import CheckBoxInput from "@/components/CheckBoxInput/CheckBoxInput";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 interface Prop {
     toggleForgetForm: () => void;
 }
@@ -27,9 +28,15 @@ const SignInForm = ({ toggleForgetForm }: Prop) => {
 
     const formValues = watch();
 
-
-    const onSubmit = (data: FormValues) => {
-        console.log(data)
+    const onSubmit = async (data: FormValues) => {
+        try {
+            // console.log(data)
+            const {email, password} = data;
+            const response = await signIn('credentials', { redirect: false, email, password });
+            console.log(response,'awkijd')            
+        } catch (error) {
+            console.log(error)
+        }
     };
 
     return (
@@ -57,7 +64,6 @@ const SignInForm = ({ toggleForgetForm }: Prop) => {
                         error={errors?.password}
                         value={formValues.password}
                         type="password"
-                        validator={Validator<FormValues>({ label: 'password', getValues, getValueKey: 'password', type: 'password' })}
                         setValue={setValue}
                     />
 
@@ -78,7 +84,7 @@ const SignInForm = ({ toggleForgetForm }: Prop) => {
                 <Box className='my-4'>
                     <CustomButton text={'Sign In'} onClick={handleSubmit(onSubmit)} />
                 </Box>
-                <Typography onClick={() => { router.push('/api/auth/signup') }} className="text-end w-full cursor-pointer text-blue-700" variant="caption">If you don't have an account click here</Typography>
+                <Typography onClick={() => { router.push('/auth/signup') }} className="text-end w-full cursor-pointer text-blue-700" variant="caption">If you don&apos;t have an account click here</Typography>
             </Container>
         </Box>
     );

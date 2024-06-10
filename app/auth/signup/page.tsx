@@ -104,7 +104,7 @@ const SignUp = () => {
         <Box className='my-4'>
           <CustomButton text={'Sign Up'} onClick={handleSubmit(onSubmit)} />
         </Box>
-        <Typography onClick={() => { router.push('/api/auth/signin') }} className="text-end w-full cursor-pointer text-blue-700" variant="caption">Already have an account click here</Typography>
+        <Typography onClick={() => { router.push('/auth/signin') }} className="text-end w-full cursor-pointer text-blue-700" variant="caption">Already have an account click here</Typography>
       </Container>
     </Box>
   );

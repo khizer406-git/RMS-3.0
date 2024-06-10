@@ -20,11 +20,12 @@ const PasswordValidator = (
   passwordType: string,
   getValues: any
 ) => {
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  // const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  const regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/
 
   return regex.test(password)
     ? ConfirmPasswordValidator(password, passwordType, getValues)
-    : "Password must be at least 8 characters long and contain uppercase letters, lowercase letters, and numbers";
+    : "Password must be at least 8 characters long and contain one uppercase, lowercase letter and atleast one number and special character";
 };
 
 const EmailValidator = (email: string) => {
