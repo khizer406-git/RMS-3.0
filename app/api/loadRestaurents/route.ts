@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]";
+import { authOptions } from "../auth/[...nextauth]/route";
 // import { Middleware } from '../../../middleware'
 
 
