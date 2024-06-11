@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/api/auth/[...nextauth]/route';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { getToken } from 'next-auth/jwt';
 
 export default async function authMiddleware(req: NextRequest, res: NextResponse) {
