@@ -7,7 +7,6 @@ import { SignInFormValues as FormValues } from "@/formValues";
 import { Typography } from "@mui/material";
 import CustomButton from "@/components/Button/Button";
 import { Validator } from "@/FormValidator/FormValidator";
-import CheckBoxInput from "@/components/CheckBoxInput/CheckBoxInput";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 interface Prop {
@@ -29,7 +28,6 @@ const SignInForm = ({ toggleForgetForm }: Prop) => {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      // console.log(data)
       const { email, password } = data;
       const response = await signIn("credentials", {
         redirect: false,

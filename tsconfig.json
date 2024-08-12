@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "target": "ESNext",
+    "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -23,6 +25,6 @@
     }
     
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/auth/[...nextauth]"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/auth/[...nextauth]", "scripts/migrate.js", "scripts/migrate.js"],
   "exclude": ["node_modules"]
 }

@@ -1,5 +1,5 @@
 'use client'
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import InputTextField from "@/components/TextField/TextField";
 import { Box, Container } from '@mui/material';
@@ -8,6 +8,10 @@ import { Typography } from "@mui/material";
 import CustomButton from "@/components/Button/Button";
 import { Validator } from "@/FormValidator/FormValidator";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { AUTH_ENDPOINTS } from "@/utils/constants/APIEndPoints";
+import { showToast } from "@/utils/showtoast/showtoast";
+import { ToastSeverity } from "@/utils/enums";
 const SignUp = () => {
   const {
     register,
@@ -21,9 +25,24 @@ const SignUp = () => {
 
   const formValues = watch();
 
+
   const router = useRouter();
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const response = await axios.post(
+        AUTH_ENDPOINTS.SIGNUP, 
+        data, 
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }
+      );
+      showToast('User Created Successfully',ToastSeverity.SUCCESS)
+    } catch (error) {
+      showToast('User not created successfully',ToastSeverity.ERROR)
+      console.log(error);
+    }
   };
 
   return (
