@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize';
-
+import pg from 'pg';
 const sequelize = new Sequelize(
   process.env.POSTGRES_DATABASE as string,
   process.env.POSTGRES_USER as string,
@@ -7,6 +7,7 @@ const sequelize = new Sequelize(
   {
     host: process.env.POSTGRES_HOST,
     dialect: 'postgres',
+    dialectModule: pg,
     dialectOptions: {
       ssl: {
         require: true,

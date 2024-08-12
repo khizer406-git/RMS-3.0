@@ -34,7 +34,7 @@ const SignInForm = ({ toggleForgetForm }: Prop) => {
         email,
         password,
       });
-      console.log(response, "awkijd");
+      console.log(response, "response from Server");
     } catch (error) {
       console.log(error);
     }

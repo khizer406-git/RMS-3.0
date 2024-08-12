@@ -1,3 +1,4 @@
+import { hashPassword } from "@/actions/getHashPassword";
 import { serverSchemaValidator } from "@/actions/serverSchemaValidator";
 import sequelize from "@/db/sequlize";
 import { SignUpFormValues as FormValues } from "@/formValues";
@@ -18,18 +19,21 @@ export async function POST(request: Request) {
         const connection = await sequelize.authenticate();
         console.log('Connection has been established successfully.',connection);
 
+
         // Destructure data for clarity
         const { firstName, lastName, email, password } = data;
+        const created_at = new Date();
+        const updated_at = new Date();
+
+        const hashedPassword = await hashPassword(password);
         
         // Execute query
         const [results] = await sequelize.query(
-            'INSERT INTO users ("firstName", "lastName", "email", "password") VALUES (:firstName, :lastName, :email, :password)',
+            'INSERT INTO users ("firstName", "lastName", "email", "password","created_at","updated_at") VALUES (:firstName, :lastName, :email, :hashedPassword, :created_at, :updated_at)',
             {
-                replacements: { firstName, lastName, email, password },
+                replacements: { firstName, lastName, email, hashedPassword, created_at, updated_at },
             }
         );
-        
-
         // Check if row was inserted successfully
         if (results) {
             return NextResponse.json({ message: 'User created successfully' }, { status: 201 });

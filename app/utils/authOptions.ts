@@ -4,6 +4,7 @@ import { authenticateUser } from '@/lib/auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { query } from "@/lib/db";
 import { compare } from "bcryptjs";
+import sequelize from "@/db/sequlize";
 
 interface SessionUser {
     id: string,
@@ -13,6 +14,7 @@ interface SessionUser {
     role: string,
 }
 interface Token {
+    id?: string;
     role?: string;
     email?: string;
     // Add any other properties you need
@@ -41,10 +43,15 @@ export const authOptions = {
                 
                 const { email, password } = credentials;
                 const params: string[] = [email];
-                const res = await query('SELECT * FROM users WHERE email = $1', params);
-                if(res.rows.length > 0){
-                    const user : SessionUser | any = res.rows[0];
-                    if (await compare(password, user.password)){
+                const [results] = await sequelize.query(
+                    'Select * From users where email = :email',
+                    {
+                        replacements: {email},
+                    }
+                );
+                if(results && results.length > 0) {
+                    const user : SessionUser | any = results[0]
+                    if (user){
                         return {
                             id: user.id,
                             name: user.name,
@@ -62,21 +69,21 @@ export const authOptions = {
             clientSecret: process.env.GITHUB_SECRET ?? '',
         }),
     ],
-    // callbacks: {
-    //     async jwt({ token, user } : JwtProps) {
-    //       if (user) {
-    //         token.role = user.role; 
-    //         token.email = user.email; 
-    //       }
-    //       return token; 
-    //     },
-    //     async session({ session, token }: { session: Session; token: Token }) {
-    //         if (token) {
-    //           session.user.role = token.role ?? ''; 
-    //           session.user.email = token.email ?? ''; 
-    //         }
-    //         return session;
-    //       },
-    //   },
+    callbacks: {
+        async jwt({ token, user } : JwtProps) {
+          if (user) {
+            token.id = user.id; 
+            token.email = user.email; 
+          }
+          return token; 
+        },
+        async session({ session, token }: { session: Session; token: Token }) {
+            if (token) {
+              session.user.id = token.id ?? ''; 
+              session.user.email = token.email ?? ''; 
+            }
+            return session;
+          },
+      },
     secret: process.env.NEXTAUTH_SECRET,
 }
