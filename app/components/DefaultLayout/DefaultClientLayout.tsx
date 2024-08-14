@@ -1,7 +1,10 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-
+import Sidebar from '../SideBar/sidebar';
+import Header from '../Header/header';
+import { Box, Divider } from '@mui/material';
+import { usePathname } from 'next/navigation';
 interface ClientOnlyProps {
   children: React.ReactNode;
 }
@@ -10,6 +13,8 @@ const DefaultClientLayout: React.FC<ClientOnlyProps> = ({
   children
 }) => {
   const [hasMounted, setHasMounted] = useState(false);
+  const pathname = usePathname()
+  const isAuthPage = pathname?.startsWith('/auth');
 
   useEffect(() => {
     setHasMounted(true);
@@ -18,9 +23,17 @@ const DefaultClientLayout: React.FC<ClientOnlyProps> = ({
   if (!hasMounted) return null;
 
   return (
-    <>
-      {children}
-    </>
+    
+      isAuthPage ? <Box>{children}</Box>  :
+      <Box display={'flex'} flexDirection={'column'}>
+        <Header/>
+        <Box display={'flex'} >
+          <Sidebar /> 
+          <Divider sx={{height:'91vh'}} orientation='vertical' />
+          <Box width={'100%'} p={1}>{children}</Box>
+        </Box>
+      </Box>
+    
   );
 };
 

@@ -7,10 +7,10 @@ import { getToken } from 'next-auth/jwt';
 export default async function authMiddleware(req: NextRequest, res: NextResponse) {
   const isAuthenticated = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
   
-  if (!isAuthenticated) {
-    const loginUrl = `${req.nextUrl.origin}/auth/signin`;
-    return NextResponse.redirect(loginUrl)
-  }
+  // if (!isAuthenticated) {
+  //   const loginUrl = `${req.nextUrl.origin}/auth/signin`;
+  //   return NextResponse.redirect(loginUrl)
+  // }
 
   // const user = isAuthenticated;
 

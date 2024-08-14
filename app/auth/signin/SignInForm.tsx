@@ -9,6 +9,7 @@ import CustomButton from "@/components/Button/Button";
 import { Validator } from "@/FormValidator/FormValidator";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 interface Prop {
   toggleForgetForm: () => void;
 }
@@ -34,7 +35,13 @@ const SignInForm = ({ toggleForgetForm }: Prop) => {
         email,
         password,
       });
-      console.log(response, "response from Server");
+      if(response?.status === 401){
+        console.log(response,'response')
+        toast.error('Invalid Credentials')
+      }
+      else {
+        toast.error('Successfully Logged In')
+      }
     } catch (error) {
       console.log(error);
     }

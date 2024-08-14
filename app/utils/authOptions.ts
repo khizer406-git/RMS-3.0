@@ -42,7 +42,6 @@ export const authOptions = {
                 }
                 
                 const { email, password } = credentials;
-                const params: string[] = [email];
                 const [results] = await sequelize.query(
                     'Select * From users where email = :email',
                     {

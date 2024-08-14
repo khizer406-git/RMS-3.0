@@ -4,6 +4,7 @@ import "./globals.css";
 import SessionProvider from "@/components/SessionProvider/SessionProvider";
 import { getServerSession } from "next-auth";
 import { Toaster } from 'react-hot-toast'; // Import Toaster from react-hot-toast
+import DefaultClientLayout from "./components/DefaultLayout/DefaultClientLayout";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,13 +19,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession();
-  console.log(session, 'I am session');
 
   return (
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
-          {children}
+          <DefaultClientLayout>
+            {children}
+          </DefaultClientLayout>
         </SessionProvider>
         <Toaster /> 
       </body>
